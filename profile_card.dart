@@ -5,7 +5,9 @@ class ProfileCard extends StatelessWidget{
   final String name;
   final String rollNo;
   final Color colors;
-  const ProfileCard({super.key, required this.imageUrl, required this.name, required this.rollNo, required this.colors});
+  final String pno;
+  final String loc;
+  const ProfileCard({super.key, required this.imageUrl, required this.name, required this.rollNo, required this.colors,required this.pno,required this.loc});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class ProfileCard extends StatelessWidget{
                     foregroundColor: Colors.white
                 ),
                 onPressed: (){
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>ProDetails(imageUrl,name,rollNo,colors)));
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>ProDetails(imageUrl,name,rollNo,colors,pno,loc)));
                 }, child: Text("View Profile"), )
             ],
           ),
