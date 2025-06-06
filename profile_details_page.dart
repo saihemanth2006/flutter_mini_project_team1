@@ -1,22 +1,79 @@
 import 'package:flutter/material.dart';
 
 class ProDetails extends StatelessWidget{
-   final url,name,roll,col;
-    const ProDetails(this.url,this.name,this.roll,this.col);
+   final url,name,roll,col,pno,loc;
+    const ProDetails(this.url,this.name,this.roll,this.col,this.pno,this.loc);
     Widget build(BuildContext context){
       final sw=MediaQuery.of(context).size.width;
       final sl=MediaQuery.of(context).size.width;
-      
-      return Scaffold(
+      void showMyDialog(BuildContext context){
+         showDialog(
+          context:context,
+          builder:(BuildContext context){
+            return AlertDialog(
+              title: Text('Edit'),
+              content: Text('Under Construction'),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    
+                  },
+                  child: Text("OK"),
+                ),
+              ],
+            );
+            
+          }
+         );
+        }
         
+       void showMyDialog2(BuildContext context){
+         showDialog(
+          context:context,
+          builder:(BuildContext context){
+            return AlertDialog(
+              title: Text('Ph.No'),
+              content: Text('+91-'+pno),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    
+                  },
+                  child: Text("OK"),
+                ),
+              ],
+            );
+            
+          }
+         );
+        }
+      return Scaffold(
         appBar: AppBar(
           title: Text('Profile Details',style: TextStyle(color:Color(0xFF263238)),),
           backgroundColor: Color.fromARGB(255, 250, 113, 100),
+          actions: [
+            Icon(Icons.settings),
+            SizedBox(width: 20,)
+          ],
         ),
-        body:Padding(
+        body:Container(
+
+              decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFFF83600), Color(0xFFF9D423)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            ),
+            child:Padding(
           
           padding: EdgeInsets.all(0),
            child:Card(
+            
+            elevation: 10,
+            color: Colors.black,
              child: 
              Stack(
               //alignment:Alignment.center,
@@ -38,81 +95,109 @@ class ProDetails extends StatelessWidget{
                       child:SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child:Container(
-                          padding: EdgeInsets.only(left: 30,right: 30),
+                          padding: EdgeInsets.only(left: 50,right: 50),
                           decoration: BoxDecoration(
                             //borderRadius: BorderRadius.only(topLeft: Radius.circular(180),topRight: Radius.circular(180)),
                             //color: Colors.amber
                           ),
                           child:Column(
                               children:[
-                                KeyValue('name',name),
-                                KeyValue('Email',roll+'@aec.edu.in'),
-                                KeyValue('Location','Tuni'),
-                                KeyValue('Contact','8555049768'),
-                                KeyValue('gender','Male'),
+                                KeyValue(Icon(Icons.man),'Name',name),
+                                KeyValue(Icon(Icons.email),'Email',roll+'@aec.edu.in'),
+                                KeyValue(Icon(Icons.location_city),'Location',loc),
+                                KeyValue(Icon(Icons.phone),'Contact',pno),
+                                 KeyValue(Icon(Icons.male),'Gender','Male'),
                                 ]
                             )
                           )
                           )
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:MaterialStateProperty.all(Color(0xFFFF6F61)),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius:BorderRadius.circular(20)
-                                )
+                        Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Colors.purple, Colors.deepPurple],
                               ),
-                              padding: MaterialStateProperty.all(
-                              EdgeInsets.all(25),
-                              )
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ElevatedButton.icon(
+                                icon: Icon(Icons.edit),
+                                label: Text('Edit'),
+                                style: ButtonStyle(
+                                    //backgroundColor:MaterialStateProperty.all(Color(0xFFFF6F61)),
+                                     backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                                     shadowColor: MaterialStateProperty.all(Colors.transparent),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius:BorderRadius.circular(20)
+                                      )
+                                    ),
+                                    padding: MaterialStateProperty.all(
+                                    EdgeInsets.all(20),
+                                    )
+                                 ),
+                                 onPressed: () =>showMyDialog(context),
+                                 
+                            ),
                           ),
-                          onPressed: (){
-                          },
-                          child: Center(
-                            child:Text('Edit')
-                          ),
-                        ),
-                        OutlinedButton(
-                          style: ButtonStyle(
-                              backgroundColor:MaterialStateProperty.all(Color(0xFFFF6F61)),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius:BorderRadius.circular(20)
-                                )
+                          
+                        Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Colors.purple, Colors.deepPurple],
                               ),
-                              padding: MaterialStateProperty.all(
-                              EdgeInsets.all(20),
-                              )
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ElevatedButton.icon(
+                                icon: Icon(Icons.phone),
+                                label: Text('Contact'),
+                                style: ButtonStyle(
+                                    //backgroundColor:MaterialStateProperty.all(Color(0xFFFF6F61)),
+                                     backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                                     shadowColor: MaterialStateProperty.all(Colors.transparent),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius:BorderRadius.circular(20)
+                                      )
+                                    ),
+                                    padding: MaterialStateProperty.all(
+                                    EdgeInsets.all(20),
+                                    )
+                                 ),
+                                 onPressed: ()=>showMyDialog2(context),
+                            ),
                           ),
-                          onPressed: (){
-                          },
-                          child: Center(
-                            child: Text('Contact'),
-                          ),
-                        ),
-                        OutlinedButton(
-                          style: ButtonStyle(
-                             backgroundColor:MaterialStateProperty.all(Color(0xFFFF6F61)),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius:BorderRadius.circular(20)
-                                )
+                        Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Colors.purple, Colors.deepPurple],
                               ),
-                              padding: MaterialStateProperty.all(
-                              EdgeInsets.all(25),
-                              ),
-                             
-                          ),
-                          onPressed: (){
-                          },
-                          child: Center(
-                            child: Text('Back'),
-                          ),
-                        )
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ElevatedButton.icon(
+                                icon: Icon(Icons.arrow_back),
+                                label: Text('Back'),
+                                style: ButtonStyle(
+                                    //backgroundColor:MaterialStateProperty.all(Color(0xFFFF6F61)),
+                                     backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                                     shadowColor: MaterialStateProperty.all(Colors.transparent),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius:BorderRadius.circular(20)
+                                      )
+                                    ),
+                                    padding: MaterialStateProperty.all(
+                                    EdgeInsets.all(20),
+                                    )
+                                 ),
+                                 onPressed: () {
+                                  Navigator.pop(context);
+                                 },
+                            ),
+                          )
+
                       ],
                     )
                 ]
@@ -133,6 +218,8 @@ class ProDetails extends StatelessWidget{
            )
            )
         )
+        )
+        
       );
     }
 }
@@ -164,7 +251,8 @@ class CustomClipPath extends CustomClipper<Path>{
 }
 class KeyValue extends StatelessWidget{
   final String title,value;
-  const KeyValue(this.title,this.value);
+  final val;
+  const KeyValue(this.val,this.title,this.value);
   Widget build(BuildContext context){
     return Card(
         color: Color(0xFF4DB6AC),
@@ -174,9 +262,11 @@ class KeyValue extends StatelessWidget{
           padding: EdgeInsets.all(10),
          child: Row(
           children: [
+              
+              val,
               Expanded(
                 child: Container(
-                  child: Text('$title',style: TextStyle(color: Color(0xFF263238)),),
+                  child: Center(child:Text('$title',style: TextStyle(color: Color(0xFF263238)),),)
                 ),
               ),
               Expanded(
