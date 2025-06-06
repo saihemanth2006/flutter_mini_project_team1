@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'profile_details_page.dart';
 import 'home_page.dart';
 import 'profile_card.dart';
+import 'splash_screen.dart';
 //import 'profile_card.dart';
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         initialRoute:'/',
         routes: {
-          '/':(context)=>HomeScreen(),
+          '/':(context)=>SplashScreen(),
           
 
         },
@@ -24,3 +25,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
