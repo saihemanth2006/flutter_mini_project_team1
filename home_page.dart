@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'profile_card.dart';
 //welcome page
 class HomeScreen extends StatelessWidget{
-  const HomeScreen({super.key});
-  @override
+  //const HomeScreen({super.key});
+  @override   
   Widget build(BuildContext context) {
    return Scaffold(
      backgroundColor: Colors.black,
