@@ -1,11 +1,30 @@
 import 'package:flutter/material.dart';
-
-class ProDetails extends StatelessWidget{
-   final url,name,roll,col,pno,loc;
-    const ProDetails(this.url,this.name,this.roll,this.col,this.pno,this.loc);
+class ProDetails extends StatefulWidget{
+  final url,name,roll,col,pno,loc;
+  ProDetails(this.url,this.name,this.roll,this.col,this.pno,this.loc);
+  _ProDetailsState createState()=>_ProDetailsState();
+}
+class _ProDetailsState extends State<ProDetails>{
+        double _h = 0,_he=0,_bh=0,_wi=0;
+         Color _col=Colors.white;
+         @override
+         void initState() {
+          super.initState();
+          Future.delayed(Duration(milliseconds: 300), () {
+            setState(() {
+              _h=150;
+              _he=100;
+              _wi=100;
+              _bh=50;
+              _col=Colors.black;
+            });
+          }
+          );
+        }
+  
     Widget build(BuildContext context){
       final sw=MediaQuery.of(context).size.width;
-      final sl=MediaQuery.of(context).size.width;
+     // final sl=MediaQuery.of(context).size.width;
       void showMyDialog(BuildContext context){
          showDialog(
           context:context,
@@ -34,7 +53,7 @@ class ProDetails extends StatelessWidget{
           builder:(BuildContext context){
             return AlertDialog(
               title: Text('Ph.No'),
-              content: Text('+91-'+pno),
+              content: Text('+91-'+widget.pno),
               actions: [
                 ElevatedButton(
                   onPressed: () {
@@ -58,20 +77,21 @@ class ProDetails extends StatelessWidget{
             SizedBox(width: 20,)
           ],
         ),
-        body:Container(
-
+        body:AnimatedContainer(
+              duration: Duration(milliseconds: 900),
+              curve: Curves.easeInOut,
               decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFFF83600), Color(0xFFF9D423)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+              //gradient: lg,
+                color: _col
             ),
             child:Padding(
           
           padding: EdgeInsets.all(0),
            child:Card(
-            
+            shape:RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+              
+            ),
             elevation: 10,
             color: Colors.black,
              child: 
@@ -82,10 +102,14 @@ class ProDetails extends StatelessWidget{
               children:[
                   ClipPath(
                     clipper:CustomClipPath(),
-                    child: Container(
-                      color:col,
-                      height: 150,
-                     
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 700),
+                      curve: Curves.easeInOut,
+                      height: _h,
+                      decoration: BoxDecoration(
+                        color:widget.col,
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
+                      ),
                     ),
                     ),
                     
@@ -96,23 +120,24 @@ class ProDetails extends StatelessWidget{
                         scrollDirection: Axis.vertical,
                         child:Container(
                           padding: EdgeInsets.only(left: 50,right: 50),
-                          decoration: BoxDecoration(
-                            //borderRadius: BorderRadius.only(topLeft: Radius.circular(180),topRight: Radius.circular(180)),
-                            //color: Colors.amber
-                          ),
+                          
                           child:Column(
                               children:[
-                                KeyValue(Icon(Icons.man),'Name',name),
-                                KeyValue(Icon(Icons.email),'Email',roll+'@aec.edu.in'),
-                                KeyValue(Icon(Icons.location_city),'Location',loc),
-                                KeyValue(Icon(Icons.phone),'Contact',pno),
+                                KeyValue(Icon(Icons.man),'Name',widget.name),
+                                KeyValue(Icon(Icons.email),'Email',widget.roll+'@aec.edu.in'),
+                                KeyValue(Icon(Icons.location_city),'Location',widget.loc),
+                                KeyValue(Icon(Icons.phone),'Contact',widget.pno),
                                  KeyValue(Icon(Icons.male),'Gender','Male'),
                                 ]
                             )
                           )
                           )
                     ),
-                    Row(
+                     AnimatedContainer(
+                      duration: Duration(milliseconds: 700),
+                      curve: Curves.easeInOut,
+                      height: _bh,
+                      child:Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Container(
@@ -180,10 +205,10 @@ class ProDetails extends StatelessWidget{
                                 icon: Icon(Icons.arrow_back),
                                 label: Text('Back'),
                                 style: ButtonStyle(
-                                    //backgroundColor:MaterialStateProperty.all(Color(0xFFFF6F61)),
+                                   
                                      backgroundColor: MaterialStateProperty.all(Colors.transparent),
                                      shadowColor: MaterialStateProperty.all(Colors.transparent),
-                                    shape: MaterialStateProperty.all(
+                                     shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
                                         borderRadius:BorderRadius.circular(20)
                                       )
@@ -199,19 +224,23 @@ class ProDetails extends StatelessWidget{
                           )
 
                       ],
-                    )
+                    ),
+                    ),
+                   SizedBox(height: 16,)
                 ]
                 
              ),
              Positioned(
-                 
                   top: 50,
                   left: (sw/2)-70,
-                  
-                  width: 100,height: 100,
-                  child: ClipRRect(
-                     borderRadius: BorderRadius.circular(50),
-                     child:Image.asset(this.url,fit: BoxFit.cover)
+                  child: AnimatedContainer(
+                    width: _wi,height: _he,
+                      duration:Duration(seconds: 1),
+                      curve:Curves.bounceOut,
+                      child:ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child:Image.asset(widget.url,fit: BoxFit.cover)
+                  )
                   )
                 ),
              ]
@@ -225,20 +254,19 @@ class ProDetails extends StatelessWidget{
 }
 class CustomClipPath extends CustomClipper<Path>{
   Path getClip(Size size){
-    //  double w=size.width;
-    //  double h=size.height;
+    
       final path = Path();
 
-    // Start from bottom left
+    
     path.moveTo(0, size.height);
 
-    // Curve upward beyond the top using control point outside the visible box
+    
     path.quadraticBezierTo(
-      size.width / 2, size.height-100, // Control point ABOVE the container
-      size.width, size.height, // End at bottom-right
+      size.width / 2, size.height-100, 
+      size.width, size.height,
     );
 
-    // Complete shape by connecting to top-right and top-left
+   
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
 
